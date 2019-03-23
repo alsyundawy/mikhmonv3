@@ -34,6 +34,7 @@ if (!isset($_SESSION["mikhmon"])) {
     $timelimit = ($_POST['timelimit']);
     $datalimit = ($_POST['datalimit']);
     $comment = ($_POST['comment']);
+    $chkvalid = ($_POST['valid']);
     $mbgb = ($_POST['mbgb']);
     if ($timelimit == "") {
       $timelimit = "0";
@@ -45,6 +46,14 @@ if (!isset($_SESSION["mikhmon"])) {
     } else {
       $datalimit = $datalimit * $mbgb;
     }
+    if ($name == $password) {
+      $usermode = "vc-";
+    }else{
+      $usermode = "up-";
+    }
+    
+      $comment = $usermode.$comment;
+    
     $API->comm("/ip/hotspot/user/add", array(
       "server" => "$server",
       "name" => "$name",
@@ -186,10 +195,7 @@ if (!isset($_SESSION["mikhmon"])) {
 // get valid $ price
 function GetVP(){
   var prof = document.getElementById('uprof').value;
-  var url = "./process/getvalidprice.php?name=";
-  var session = "&session=<?= $session; ?>"
-  var getvalidprice = url+prof+session
-  $("#GetValidPrice").load(getvalidprice);
+  $("#GetValidPrice").load("./process/getvalidprice.php?name="+prof+"&session=<?= $session; ?> #getdata");
 }  
 </script>
 </div>
